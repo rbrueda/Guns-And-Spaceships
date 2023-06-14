@@ -1,7 +1,7 @@
 import pygame
 from pygame.constants import BUTTON_LEFT
 pygame.font.init()
-# pygame.mixer.init()
+pygame.mixer.init()
 #sound affect library
 
 import pygame
@@ -19,8 +19,8 @@ YELLOW = (255, 255, 0)
 
 BORDER = pygame.Rect(WIDTH//2 - 5, 0, 10, HEIGHT) ##
 
-# BULLET_HIT_SOUND = pygame.mixer.Sound(os.path.load('Assets/Grenade+1.mp3'))
-# BULLET_FIRE_SOUND = pygame.mixer.Sound('Assets/Gun+Silencer.mp3')
+BULLET_HIT_SOUND = pygame.mixer.Sound('Assets/Grenade+1.mp3')
+BULLET_FIRE_SOUND = pygame.mixer.Sound('Assets/Gun+Silencer.mp3')
     #can you "/" to make you own path yourself if path cannot be traced
 
 HEALTH_FONT = pygame.font.SysFont('comicsans', 40)
@@ -33,7 +33,7 @@ MAX_BULLETS = 3
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 55, 40
 
 YELLOW_HIT = pygame.USEREVENT + 1 
-# "+1" "+2" represents a sequence. If you make both the same numebr (for eg. +1) than they would be the same event because they would have the same underlying number representing them
+# "+1" "+2" represents a sequence. If you make both the same number (for eg. +1) than they would be the same event because they would have the same underlying number representing them
 #represents the code or number for a custom user event
 RED_HIT = pygame.USEREVENT + 2
 
@@ -104,7 +104,7 @@ def handle_bullets(yellow_bullets, red_bullets, yellow, red):
     for bullet in yellow_bullets:
         bullet.x += BULLET_VEL
         if red.colliderect(bullet):
-            #we are checking red bulletshitting yellow character
+            #we are checking if yellow bullet hits red spaceship
             pygame.event.post(pygame.event.Event(RED_HIT))
             yellow_bullets.remove(bullet)
         elif bullet.x > WIDTH:
@@ -114,11 +114,12 @@ def handle_bullets(yellow_bullets, red_bullets, yellow, red):
     for bullet in red_bullets:
         bullet.x -= BULLET_VEL
         if yellow.colliderect(bullet):
-            #we are checking red bulletshitting yellow character
+            #we are checking red bullet shoots yellow character
             pygame.event.post(pygame.event.Event(YELLOW_HIT))
             red_bullets.remove(bullet)
         elif bullet.x < 0:
             red_bullets.remove(bullet)
+            #red bullet disappears
 
 def draw_winner(text):
     draw_text = WINNER_FONT.render(text, 1, WHITE)
@@ -131,7 +132,7 @@ def draw_winner(text):
 def main():
     red = pygame.Rect(700, 300, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
     #red represents red player 
-    #identify position/rectangle that represents this red spaceship \
+    #identify position/rectangle that represents this red spaceship 
     yellow = pygame.Rect(100, 300, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
     
     red_bullets = []
@@ -159,7 +160,7 @@ def main():
                     #to create a rectangle that is at the position we want to fire it from
                     yellow_bullets.append(bullet)
                     #append: add something to a list
-                    # BULLET_FIRE_SOUND.play()
+                    BULLET_FIRE_SOUND.play()
                     #the sound every time we fire a bullet
 
                 if event.key == pygame.K_RCTRL and len(red_bullets) < MAX_BULLETS:
@@ -167,16 +168,16 @@ def main():
                         red.x, red.y + red.height//2 - 2, 10, 5)
                         #"//" represents integer division so we dont get floating point issues
                     red_bullets.append(bullet)
-                    # BULLET_FIRE_SOUND.play()
+                    BULLET_FIRE_SOUND.play()
 
             if event.type == RED_HIT:
                 red_health -= 1
                 # when read is hit that means health is subtracted
-                # BULLET_HIT_SOUND.play()
+                BULLET_HIT_SOUND.play()
 
             if event.type == YELLOW_HIT:  
                 yellow_health -= 1
-                # BULLET_HIT_SOUND.play()
+                BULLET_HIT_SOUND.play()
 
         winner_text = ""
         # "" = blank string (string = series of characters)
