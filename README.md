@@ -1,4 +1,4 @@
-# guns-and-spaceships
+# Guns-And-Spaceships
 
 This interactive two-player, two-dimensional game was created in the programming language Python, more specifically using the built in library Pygame. The game’s objective is to go against another user-controlled spaceship striking bullets at them until one’s heart level reaches zero. This game contains two spaceships: yellow spaceship (left of screen) and red spaceship (right of screen). Each player will be able to move their spaceship with specific keyboard keys. The purpose of developing this game is to gain more knowledge in Python, more specifically Pygame, as I had been interested in doing so. I used Tech with Tim’s series in Pygame tutorials to help me develop this game. This game uses many Pygame Rect objects to store and manipulate rectangle objects, which will allow to detect collision of objects. In addition, spaceships are rotated 90 degrees so they directly face their opponent. \
 The game has the following features: 
